@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/CoffeeTimeBot/static/css/main.2544e43a.css",
+    "main.js": "/CoffeeTimeBot/static/js/main.ad4b3b4e.js",
+    "index.html": "/CoffeeTimeBot/index.html",
+    "main.2544e43a.css.map": "/CoffeeTimeBot/static/css/main.2544e43a.css.map",
+    "main.ad4b3b4e.js.map": "/CoffeeTimeBot/static/js/main.ad4b3b4e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2544e43a.css",
+    "static/js/main.ad4b3b4e.js"
+  ]
+}
