@@ -30,29 +30,27 @@ api.interceptors.response.use(
 
       const refreshToken = localStorage.getItem('refresh_token');
       if (!refreshToken) {
-        // Если refresh-токена нет — просто отклоняем ошибку
         return Promise.reject(error);
       }
 
       try {
-        // Запрос на обновление токена
-        const response = await axios.post('http://localhost:8000/api/token/refresh/', {
-          refresh: refreshToken,
-        });
+        // Запрос на обновление токена через полный путь
+        const refreshResponse = await axios.post(
+          `${process.env.REACT_APP_BACKEND_URL}/api/v1/token/refresh/`,
+          { refresh: refreshToken },
+          { headers: { 'Content-Type': 'application/json' } }
+        );
 
-        // Сохраняем новый access-токен
-        localStorage.setItem('token', response.data.access);
+        const newAccessToken = refreshResponse.data.access;
+        localStorage.setItem('token', newAccessToken);
 
-        // Обновляем заголовок у исходного запроса
-        originalRequest.headers.Authorization = `Bearer ${response.data.access}`;
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 
-        // Повторяем исходный запрос с новым токеном
         return axios(originalRequest);
       } catch (refreshError) {
-        // Если обновление не удалось — очищаем авторизацию и редиректим (например, на логин)
         localStorage.removeItem('token');
         localStorage.removeItem('refresh_token');
-        window.location.href = '/login'; // или другое действие
+        window.location.href = '/login';
         return Promise.reject(refreshError);
       }
     }
